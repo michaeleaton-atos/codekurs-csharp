@@ -1,0 +1,96 @@
+1.
+Vorhersage:
+Das kompiliert nicht, weil Fahrzeug eine abstrakte Klasse ist
+
+Meldung in eigenen Worten:
+Der Compiler verbietet das Erstellen eines Objekts
+von einer abstrakten Klasse.
+
+Was habe ich gelernt?
+abstract bedeutet:
+man kann kein direktes Objekt davon erzeugen.
+
+
+2.
+Vorhersage:
+Das kompiliert nicht,
+weil Auto von der abstrakten Klasse Fahrzeug erbt
+und Fahrzeug die abstrakte Methode Hupen() vorgibt.
+
+Meldung in eigenen Worten:
+Die Kindklasse Auto muss die abstrakte Methode Hupen()
+aus Fahrzeug überschreiben.
+
+Was habe ich gelernt?
+Wenn eine Basisklasse eine abstrakte Methode vorgibt,
+muss jede konkrete Kindklasse diese Methode mit override implementieren.
+
+
+3.
+Vorhersage:
+Es funktioniert nicht, weil Fahrrad sealed ist.
+
+Meldung in eigenen Worten:
+Von der Klasse Fahrrad kann keine weitere Klasse erben.
+
+
+Was habe ich gelernt?
+sealed verhindert, dass eine Klasse weitere Kindklassen bekommt.
+
+
+4.
+Meine Vorhersage:
+Es funktioniert nicht, weil ein Interface keine normalen Instanzfelder haben darf.
+
+Meldung in eigenen Worten:
+Der Compiler erlaubt kein Feld im Interface.
+
+Was habe ich gelernt?
+Ein Interface beschreibt nur einen Vertrag, also zb Methoden und Properties, aber keine normalen Instanzfelder.
+
+
+5.
+Meine Vorhersage:
+Es funktioniert nicht, weil die Interface-Methode öffentlich sein muss.
+
+Meldung in eigenen Worten:
+Smartphone implementiert die Methode Aufladen() aus IAufladbar nicht korrekt.
+
+Was habe ich gelernt?
+Eine Interface-Methode muss bei normaler Implementierung public sein,
+damit sie über das Interface aufgerufen werden kann.
+
+
+6.
+Meine Vorhersage:
+Es funktioniert nicht, weil override nur möglich ist,
+wenn die Methode in der Basisklasse virtual ist.
+
+Meldung in eigenen Worten:
+Die Methode Beschreibung() kann nicht überschrieben werden,
+weil die Basismethode nicht überschreibbar ist.
+
+Was habe ich gelernt?
+override braucht in der Vererbungskette eine überschreibbare Basismethode,
+virtual.
+
+
+7.
+Meine Vorhersage:
+Es funktioniert nicht, weil man von einem Interface kein Objekt erzeugen kann.
+
+Meldung in eigenen Worten:
+IAufladbar kann nicht mit new erstellt werden.
+
+Was habe ich gelernt?
+Ein Interface beschreibt nur einen Vertrag. Ein Objekt muss von einer konkreten Klasse erstellt werden, die das Interface implementiert.
+
+
+
+abstract bei Hupen():
+Es gibt in Fahrzeug keine fertige Umsetzung.
+Die Kindklasse MUSS Hupen() selbst überschreiben.
+
+virtual bei Beschreibung():
+Es gibt schon eine fertige Umsetzung.
+Die Kindklasse DARF sie überschreiben und erweitern.
