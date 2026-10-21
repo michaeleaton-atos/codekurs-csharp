@@ -1,0 +1,93 @@
+Code Uebungen Projekt Erweitern
+
+1. new Konto(...) bei abstrakter Klasse
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil Konto eine abstrakte Klasse ist und man davon kein Objekt direkt erstellen kann.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Von einer abstract-Klasse kann man kein Objekt mit new erstellen. Konto dient nur als Basisklasse. Stattdessen muss man eine konkrete Unterklasse wie Girokonto oder Sparkonto erstellen.
+
+
+2. In Sparkonto die abstrakte Methode nicht überschreiben
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil Konto die abstrakte Methode GebuehrBerechnen() vorgibt und Sparkonto sie dann nicht implementiert.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Wenn eine Klasse von einer abstrakten Klasse erbt, muss sie alle abstrakten Methoden mit override umsetzen, solange die Unterklasse selbst nicht ebenfalls abstract ist.
+
+
+3. class Spezialkonto : Sparkonto
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil Sparkonto mit sealed definiert ist und deshalb keine weitere Klasse davon erben darf.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Eine sealed-Klasse darf nicht als Basisklasse verwendet werden. Deshalb kann Spezialkonto nicht von Sparkonto erben.
+
+
+4. TipoOperacao t = "Einzahlung";
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil "Einzahlung" ein string ist, TipoOperacao aber ein Enum-Typ.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Einem Enum kann man nicht direkt einen beliebigen Text zuweisen. Man muss einen gültigen Enum-Wert verwenden, zum Beispiel TipoOperacao.Deposito.
+
+
+5. catch (Exception) vor catch (UnzureichendesGuthabenException)
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil Exception bereits alle Exceptions abfängt. Dadurch kann UnzureichendesGuthabenException danach nie erreicht werden.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Spezifische catch-Blöcke müssen vor allgemeinen catch-Blöcken stehen. Deshalb muss catch (UnzureichendesGuthabenException) vor catch (Exception) kommen.
+
+
+6. Auf einem Konto die Methode ZinsenBerechnen() aufrufen
+Meine Vorhersage:
+Es gibt einen Compilerfehler, wenn die Variable nur vom Typ Konto ist, weil Konto die Methode ZinsenBerechnen() nicht kennt.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+ZinsenBerechnen() gehört zum Interface IVerzinsbar und wird nur vom Sparkonto umgesetzt. Eine Variable vom Typ Konto kann diese Methode deshalb nicht direkt aufrufen.
+
+
+7. Betrag 0 einzahlen, ohne try
+Meine Vorhersage:
+Es wird eine UngueltigerBetragException ausgelöst, weil der Betrag 0 nicht positiv ist. Ohne try ... catch wird die Exception nicht abgefangen und das Programm beendet sich mit einem Fehler.
+
+Welche Exception?
+UngueltigerBetragException
+
+Was habe ich gelernt?
+Wenn eine Methode eine eigene Exception auslöst und kein passender catch vorhanden ist, bleibt sie unbehandelt. Deshalb sollte fehleranfälliger Code dort mit try ... catch abgesichert werden, wo man den Fehler sinnvoll behandeln kann.
+
+
+8. Sparkonto setzt IVerzinsbar um, aber ZinsenBerechnen() fehlt
+Meine Vorhersage:
+Es gibt einen Compilerfehler, weil Sparkonto das Interface IVerzinsbar implementiert, aber die verlangte Methode ZinsenBerechnen() nicht enthält.
+
+Welche Exception?
+Keine Exception – es gibt einen Compilerfehler.
+
+Was habe ich gelernt?
+Wenn eine Klasse ein Interface implementiert, muss sie alle darin definierten Methoden umsetzen. Bei IVerzinsbar gehört deshalb ZinsenBerechnen() zwingend in Sparkonto.
+
+
+
+
+

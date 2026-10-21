@@ -21,3 +21,4 @@ Persönliche Lernsammlung zu C# und objektorientierter Programmierung. Das Repos
 | [Abstraktion und Interfaces](Code_uebungen/Abstraktion_und_Interfaces/) | Gemeinsame Fahrzeugübung | [Code](Code_uebungen/Abstraktion_und_Interfaces/FahrzeugProgramm.cs) · [Antworten](Code_uebungen/Abstraktion_und_Interfaces/antworten.txt) |
 | [Fuhrpark](Code_uebungen/Fuhrpark/) | Zusammenspiel der OOP-Konzepte | [Aufgabenblatt](Code_uebungen/Fuhrpark/programmieraufgabe-fuhrpark-michael%20%281%29.pdf) · [Code](Code_uebungen/Fuhrpark/Program.cs) |
 | [Exceptions](exceptions/) | Fehlerbehandlung und Fehlerweitergabe | [Zusammenfassung](Zusammenfassung.md#exceptions) · [Übungen](exceptions/) |
+| [Projekt erweitern](Code_uebungen/Projekt_erweitern/) | Bestehendes Projekt weiterentwickeln | [Aufgabenblatt](Code_uebungen/Projekt_erweitern/aufgabe-projekt-erweitern-michael.pdf) · [Übungsdatei](Code_uebungen/Projekt_erweitern/Code_Uebungen_Projekt_Erweitern.txt) |
