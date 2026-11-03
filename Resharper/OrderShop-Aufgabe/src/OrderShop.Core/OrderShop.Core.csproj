@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <!-- Die Fachlogik referenziert die Infrastruktur. -->
+  <ItemGroup>
+    <ProjectReference Include="..\OrderShop.Infrastructure\OrderShop.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
