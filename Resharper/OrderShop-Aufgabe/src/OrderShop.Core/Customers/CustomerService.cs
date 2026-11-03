@@ -1,6 +1,6 @@
 using System.Text;
+using OrderShop.Core.Interfaces;
 using OrderShop.Core.Notifications;
-using OrderShop.Infrastructure;
 
 namespace OrderShop.Core.Customers;
 
@@ -19,43 +19,44 @@ public interface ICustomerService
 
 public class CustomerService : ICustomerService
 {
+    private readonly ICustomerRepository _repository;
+    private readonly Notification _notification;
+
+    public CustomerService(
+        ICustomerRepository repository,
+        Notification notification)
+    {
+        _repository = repository;
+        _notification = notification;
+    }
+
     public Customer? GetById(int id)
     {
-        var record = CustomerTable.Rows.FirstOrDefault(r => r.Id == id);
-        return record is null ? null : Map(record);
+        return _repository.GetById(id);
     }
 
     public IReadOnlyList<Customer> Search(string term)
     {
-        return CustomerTable.Rows
-            .Where(r => r.Name.Contains(term, StringComparison.OrdinalIgnoreCase))
-            .Select(Map)
-            .ToList();
+        return _repository.Search(term);
     }
 
     public void Update(Customer customer)
     {
-        var record = CustomerTable.Rows.FirstOrDefault(r => r.Id == customer.Id)
-            ?? throw new InvalidOperationException($"Kunde {customer.Id} existiert nicht.");
-
-        record.Name = customer.Name;
-        record.Email = customer.Email;
-        record.Phone = customer.Phone;
-        record.IsActive = customer.IsActive;
+        _repository.Update(customer);
     }
 
     public void Delete(int id)
     {
-        CustomerTable.Rows.RemoveAll(r => r.Id == id);
+        _repository.Delete(id);
     }
 
     public string ExportToCsv()
     {
         var sb = new StringBuilder();
         sb.AppendLine("Id;Name;Email;Aktiv");
-        foreach (var r in CustomerTable.Rows.OrderBy(r => r.Id))
+        foreach (var customer in _repository.GetAll())
         {
-            sb.AppendLine($"{r.Id};{r.Name};{r.Email};{(r.IsActive ? "ja" : "nein")}");
+            sb.AppendLine($"{customer.Id};{customer.Name};{customer.Email};{(customer.IsActive ? "ja" : "nein")}");
         }
         return sb.ToString();
     }
@@ -63,19 +64,12 @@ public class CustomerService : ICustomerService
     public void SendWelcomeMail(int customerId)
     {
         var customer = GetById(customerId)
-            ?? throw new InvalidOperationException($"Kunde {customerId} existiert nicht.");
+                       ?? throw new InvalidOperationException(
+                           $"Kunde {customerId} existiert nicht.");
 
-        var notification = new EmailPlainTextNotification();
-        notification.Send(customer, "Willkommen bei OrderShop",
+        _notification.Send(
+            customer,
+            "Willkommen bei OrderShop",
             $"Hallo {customer.Name}, schön, dass Sie da sind!");
     }
-
-    private static Customer Map(CustomerRecord r) => new()
-    {
-        Id = r.Id,
-        Name = r.Name,
-        Email = r.Email,
-        Phone = r.Phone,
-        IsActive = r.IsActive,
-    };
 }
