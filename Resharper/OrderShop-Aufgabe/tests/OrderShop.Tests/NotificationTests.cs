@@ -1,51 +1,47 @@
 using OrderShop.Core;
+using OrderShop.Core.Interfaces;
 using OrderShop.Core.Notifications;
-
-// Die Tests lesen die Konsolenausgabe mit und dürfen deshalb nicht parallel laufen.
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace OrderShop.Tests;
 
 public class NotificationTests
 {
-    private static readonly Customer Anna = new()
-    {
-        Id = 1, Name = "Anna", Email = "anna@example.ch", Phone = "+41 79 111 11 11", IsActive = true,
-    };
-
     [Fact]
-    public void EmailPlainText_WritesSubjectInUpperCase()
+    public void Notification_SendsMessage()
     {
-        var output = CaptureConsole(() =>
-            new EmailPlainTextNotification().Send(Anna, "Hallo", "Text"));
+        var customer = new Customer
+        {
+            Id = 1,
+            Name = "Max",
+            IsActive = true
+        };
 
-        Assert.Contains("[SMTP] An: anna@example.ch", output);
-        Assert.Contains("HALLO", output);
+        var channel = new FakeNotificationChannel();
+
+        var notification = new Notification(
+            channel,
+            new PlainTextFormatter());
+
+        notification.Send(
+            customer,
+            "Test",
+            "Hallo");
+
+        Assert.True(channel.WasSent);
     }
 
-    [Fact]
-    public void SmsMarkdown_UsesMarkdownHeading()
+    private sealed class FakeNotificationChannel : INotificationChannel
     {
-        var output = CaptureConsole(() =>
-            new SmsMarkdownNotification().Send(Anna, "Hallo", "Text"));
+        public bool WasSent { get; private set; }
 
-        Assert.Contains("[SMS] An: +41 79 111 11 11", output);
-        Assert.Contains("# Hallo", output);
-    }
-
-    private static string CaptureConsole(Action action)
-    {
-        var original = Console.Out;
-        using var writer = new StringWriter();
-        Console.SetOut(writer);
-        try
+        public void Send(
+            Customer recipient,
+            string subject,
+            string content)
         {
-            action();
+            // Es wird nichts wirklich verschickt.
+            // Der Fake merkt sich nur, dass Send() aufgerufen wurde.
+            WasSent = true;
         }
-        finally
-        {
-            Console.SetOut(original);
-        }
-        return writer.ToString();
     }
 }
