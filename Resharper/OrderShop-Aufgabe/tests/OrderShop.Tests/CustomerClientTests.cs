@@ -47,6 +47,8 @@ public class CustomerReportJobTests
 /// <summary>
 /// Handgeschriebener Testdouble für ICustomerService.
 /// </summary>
+///
+//ICustomerService ist zu gross udn zwingt Fake methoden zu im0lementieren die die tests gar nciht brauhcen.
 internal class FakeCustomerService : ICustomerService
 {
     private readonly List<Customer> _customers;
@@ -58,7 +60,7 @@ internal class FakeCustomerService : ICustomerService
 
     public string CsvToReturn { get; set; } = "";
 
-    public Customer? GetById(int id) => _customers.FirstOrDefault(c => c.Id == id);
+    public Customer? GetById(int id) => _customers.FirstOrDefault(c => c.Id == id);//dieser
 
     public IReadOnlyList<Customer> Search(string term) => throw new NotImplementedException();
 
@@ -66,7 +68,7 @@ internal class FakeCustomerService : ICustomerService
 
     public void Delete(int id) => throw new NotImplementedException();
 
-    public string ExportToCsv() => CsvToReturn;
+    public string ExportToCsv() => CsvToReturn; // dieser
 
     public void SendWelcomeMail(int customerId) => throw new NotImplementedException();
 }
