@@ -1,4 +1,4 @@
-using OrderShop.Infrastructure;
+using OrderShop.Core.Interfaces;
 
 namespace OrderShop.Core.Notifications;
 
@@ -10,47 +10,31 @@ namespace OrderShop.Core.Notifications;
 //   - zusätzliches Format "HTML"
 // --------------------------------------------------------------------------
 
-public abstract class Notification
+public class Notification
 {
-    public abstract void Send(Customer recipient, string subject, string body);
-}
+    private readonly INotificationChannel _channel;
+    private readonly INotificationFormatter _formatter;
 
-public class EmailPlainTextNotification : Notification
-{
-    public override void Send(Customer recipient, string subject, string body)
+    //objekte in variable speichern(Konstruktor Injection)
+    public Notification(
+        INotificationChannel channel,
+        INotificationFormatter formatter)
     {
-        var text = $"{subject.ToUpperInvariant()}\n\n{body}\n\n-- \nIhr OrderShop-Team";
-        var client = new SmtpMailClient();
-        client.Send(recipient.Email, subject, text);
+        _channel = channel;
+        _formatter = formatter;
+    }
+
+
+    // Senden mit den jeweiligen objekten
+    public void Send(Customer recipient, string subject, string body)
+    {
+        string content = _formatter.Format(subject, body);
+
+        _channel.Send(recipient, subject, content);
     }
 }
 
-public class EmailMarkdownNotification : Notification
-{
-    public override void Send(Customer recipient, string subject, string body)
-    {
-        var text = $"# {subject}\n\n{body}\n\n_Ihr OrderShop-Team_";
-        var client = new SmtpMailClient();
-        client.Send(recipient.Email, subject, text);
-    }
-}
 
-public class SmsPlainTextNotification : Notification
-{
-    public override void Send(Customer recipient, string subject, string body)
-    {
-        var text = $"{subject.ToUpperInvariant()}\n\n{body}\n\n-- \nIhr OrderShop-Team";
-        var client = new SmsGatewayClient();
-        client.Send(recipient.Phone, text);
-    }
-}
 
-public class SmsMarkdownNotification : Notification
-{
-    public override void Send(Customer recipient, string subject, string body)
-    {
-        var text = $"# {subject}\n\n{body}\n\n_Ihr OrderShop-Team_";
-        var client = new SmsGatewayClient();
-        client.Send(recipient.Phone, text);
-    }
-}
+
+
