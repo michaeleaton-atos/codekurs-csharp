@@ -7,8 +7,5 @@
   </PropertyGroup>
 
   <!-- Die Fachlogik referenziert die Infrastruktur. -->
-  <ItemGroup>
-    <ProjectReference Include="..\OrderShop.Infrastructure\OrderShop.Infrastructure.csproj" />
-  </ItemGroup>
-
+  <!-- entfernt für Dependency Inversion Principle -->
 </Project>

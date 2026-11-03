@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<!-- Abhänigkeit jezt neu zu OrderShop-->
+	<ItemGroup>
+		<ProjectReference Include="..\OrderShop.Core\OrderShop.Core.csproj" />
+	</ItemGroup>
+
 </Project>
